@@ -2,7 +2,7 @@
     const STORAGE_KEY = 'google_workspace_accounts';
     const CLIENT_ID_KEY = 'google_oauth_client_id';
     const SHEET_HEADERS = {
-        profile: ['NIK_NIP', 'Nama_Guru', 'Username', 'Password', 'Nama_Kepsek', 'NIP_Kepsek', 'Nama_Sekolah', 'Alamat_Sekolah', 'Instansi', 'Logo_URL', 'Mapel_JSON', 'Kelas_JSON'],
+        profile: ['NIK_NIP', 'Nama_Guru', 'Username', 'Password_Tidak_Digunakan', 'Nama_Kepsek', 'NIP_Kepsek', 'Nama_Sekolah', 'Alamat_Sekolah', 'Instansi', 'Logo_URL', 'Mapel_JSON', 'Kelas_JSON'],
         questions: ['ID_Soal', 'NIK_NIP_Guru', 'Mapel', 'Kelas', 'Jenis_Soal', 'Pertanyaan_HTML', 'Opsi_JSON', 'Kunci_Jawaban', 'Created_At']
     };
     const SCOPES = 'openid email profile https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
@@ -56,7 +56,7 @@
         });
     }
 
-    async function connect() {
+    async function connect({ loginHint = '' } = {}) {
         const selectedClientId = (window.BANK_SOAL_GOOGLE_CLIENT_ID || clientId || '').trim();
         if (!selectedClientId) throw new Error('Login Google belum dikonfigurasi. Hubungi pengelola aplikasi.');
         clientId = selectedClientId;
@@ -90,7 +90,7 @@
                 },
                 error_callback: (error) => finish(reject, new Error(error.message || 'Login Google dibatalkan.'))
             });
-            tokenClient.requestAccessToken({ prompt: '' });
+            tokenClient.requestAccessToken({ prompt: '', ...(loginHint ? { hint: loginHint } : {}) });
         });
     }
 
@@ -100,6 +100,12 @@
         }
         accessToken = null;
         identity = null;
+    }
+
+    function endSession() {
+        accessToken = null;
+        identity = null;
+        tokenClient = null;
     }
 
     function requireToken() {
@@ -221,7 +227,6 @@
             nikNip: profileRow[0] || '',
             namaGuru: profileRow[1] || '',
             username: profileRow[2] || '',
-            password: profileRow[3] || '',
             namaKepsek: profileRow[4] || '',
             nipKepsek: profileRow[5] || '',
             namaSekolah: profileRow[6] || '',
@@ -265,7 +270,7 @@
 
     async function saveProfile(profile) {
         const row = [
-            profile.nikNip, profile.namaGuru, profile.username, profile.password,
+            profile.nikNip, profile.namaGuru, profile.username, '',
             profile.namaKepsek, profile.nipKepsek, profile.namaSekolah, profile.alamatSekolah,
             profile.instansi, profile.logoUrl, JSON.stringify(profile.mapelList || []), JSON.stringify(profile.kelasList || [])
         ];
@@ -313,6 +318,7 @@
         saveConfig,
         connect,
         disconnect,
+        endSession,
         findWorkspace,
         createWorkspace,
         loadAll,

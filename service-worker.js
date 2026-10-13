@@ -1,10 +1,11 @@
-const CACHE_NAME = 'bank-soal-v3';
+const CACHE_NAME = 'bank-soal-v5';
 const APP_SHELL = [
     './',
     './index.html',
     './app.js',
     './styles.css',
     './google-config.js',
+    './auth-service.js',
     './google-sync.js',
     './exam-document.js',
     './pdf-export.js',
