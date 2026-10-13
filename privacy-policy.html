@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kebijakan privasi Bank Soal Madrasah: data yang diproses, tujuan penggunaan, penyimpanan, dan pilihan pengguna.">
+    <meta name="theme-color" content="#0f766e">
+    <title>Kebijakan Privasi | Bank Soal Madrasah</title>
+    <style>
+        :root { color-scheme: light; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #1e293b; background: #f8fafc; }
+        * { box-sizing: border-box; }
+        body { margin: 0; line-height: 1.7; }
+        header { padding: 1rem 0; background: #0f766e; color: white; }
+        .wrap { width: min(100% - 2rem, 820px); margin: 0 auto; }
+        header a { color: white; }
+        main { padding: 2rem 0 3rem; }
+        h1 { line-height: 1.2; }
+        h2 { margin-top: 2rem; font-size: 1.25rem; }
+        li { margin: .45rem 0; }
+        footer { padding: 1.5rem 0; border-top: 1px solid #e2e8f0; }
+        a { color: #0f766e; }
+    </style>
+</head>
+<body>
+    <header><div class="wrap"><a href="./">Bank Soal Madrasah</a></div></header>
+    <main class="wrap">
+        <h1>Kebijakan Privasi</h1>
+        <p><strong>Terakhir diperbarui:</strong> 14 Oktober 2026</p>
+        <p>Kebijakan ini menjelaskan bagaimana aplikasi Bank Soal Madrasah (“Aplikasi”) memproses data ketika Anda mendaftar, menggunakan fitur aplikasi, atau menghubungkan akun Google. Homepage dan kebijakan ini dapat dibaca tanpa login. Pengelola proyek: <a href="https://github.com/tamsilmansabolmong">tamsilmansabolmong</a>.</p>
+
+        <h2>Data yang diproses</h2>
+        <ul>
+            <li><strong>Data akun aplikasi:</strong> NIK/NIP, nama guru, asal madrasah, username, dan password saat pendaftaran. Password diproses menjadi hash dengan salt; password asli tidak disimpan sebagai teks di spreadsheet akun.</li>
+            <li><strong>Data sesi:</strong> token sesi disimpan pada browser Anda (di penyimpanan sesi atau penyimpanan lokal jika memilih “Tetap masuk”). Server menyimpan hash token dan waktu kedaluwarsa untuk memvalidasi sesi.</li>
+            <li><strong>Data aplikasi:</strong> profil guru/sekolah dan soal yang Anda masukkan, termasuk isi soal, pilihan, kunci jawaban, serta pengaturan terkait. Data dapat disimpan di penyimpanan lokal browser dan tetap berada di perangkat sampai Anda menghapusnya.</li>
+            <li><strong>Data Google, jika Anda memilih menghubungkan Google:</strong> alamat email dan nama profil Google untuk mengenali akun yang terhubung. Aplikasi meminta izin Google untuk membaca identitas dasar, mengelola Google Sheets, dan membuat/mengelola berkas yang digunakan oleh aplikasi di Google Drive.</li>
+        </ul>
+
+        <h2>Tujuan dan penggunaan data</h2>
+        <p>Data akun digunakan untuk membuat akun dan mengautentikasi pengguna. Data profil dan soal digunakan untuk menyediakan fitur bank soal, penyusunan ujian, serta ekspor dokumen. Jika Anda menghubungkan Google, aplikasi menggunakan izin tersebut untuk membuat atau membaca spreadsheet dan berkas kerja yang Anda pilih melalui aplikasi. Data Anda tidak dijual atau digunakan untuk iklan oleh aplikasi.</p>
+        <p>Jangan masukkan data pribadi siswa atau informasi sensitif yang tidak diperlukan ke dalam soal. Anda bertanggung jawab atas isi yang ditambahkan dan atas pengaturan berbagi pada berkas Google Anda.</p>
+
+        <h2>Penyimpanan dan layanan pihak ketiga</h2>
+        <ul>
+            <li>Data akun dan sesi diproses oleh layanan Google Apps Script dan disimpan pada Google Sheets yang dikonfigurasi pengelola.</li>
+            <li>Data aplikasi disimpan di browser Anda. Jika Anda mengaktifkan sinkronisasi, profil dan soal dikirim ke spreadsheet pada Google Drive Anda; berkas ekspor yang Anda buat dapat disimpan di Google Drive sesuai tindakan Anda.</li>
+            <li>Login dan penyimpanan Google disediakan oleh Google. Penggunaan layanan tersebut juga tunduk pada <a href="https://policies.google.com/privacy">Kebijakan Privasi Google</a>.</li>
+            <li>Aplikasi web dihosting melalui GitHub Pages. Aset aplikasi juga dapat dimuat dari penyedia CDN dan Google Fonts; saat aplikasi digunakan, penyedia tersebut dapat menerima permintaan teknis seperti alamat IP dan informasi browser sesuai kebijakan mereka.</li>
+        </ul>
+        <p>Aplikasi tidak menerima atau menyimpan password akun Google. Token akses Google digunakan sementara di browser untuk menjalankan permintaan yang Anda setujui dan tidak disimpan oleh aplikasi sebagai token permanen.</p>
+
+        <h2>Masa penyimpanan dan penghapusan</h2>
+        <p>Data lokal tersimpan sampai Anda menghapus data situs dari browser. Spreadsheet, folder, dan berkas Google tetap berada di akun Google Anda sampai Anda menghapusnya. Catatan akun dan sesi pada spreadsheet administrasi dikelola oleh pengelola; sesi memiliki masa berlaku 12 jam atau 30 hari sesuai pilihan saat masuk. Untuk permintaan penghapusan data akun atau pertanyaan privasi, hubungi pengelola melalui <a href="https://github.com/tamsilmansabolmong">profil GitHub pengelola</a> dan sertakan username aplikasi Anda, bukan password.</p>
+
+        <h2>Keamanan</h2>
+        <p>Aplikasi menerapkan pemrosesan password berbasis hash dan membatasi masa berlaku sesi. Namun, penyimpanan pada perangkat bersama, konfigurasi akun Google, atau layanan pihak ketiga tetap memiliki risiko. Gunakan perangkat tepercaya, jangan bagikan token atau password, dan cabut akses aplikasi melalui pengaturan keamanan Akun Google jika tidak lagi digunakan.</p>
+
+        <h2>Perubahan kebijakan</h2>
+        <p>Kebijakan ini dapat diperbarui apabila fitur atau cara pemrosesan data berubah. Versi terbaru akan dipublikasikan pada halaman ini dengan tanggal pembaruan yang baru.</p>
+        <p><a href="./">Kembali ke homepage</a> · <a href="./app.html">Buka aplikasi</a></p>
+    </main>
+    <footer><div class="wrap">Bank Soal Madrasah · <a href="./">Homepage</a></div></footer>
+</body>
+</html>

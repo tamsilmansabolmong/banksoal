@@ -2,72 +2,74 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank & Generator Soal Madrasah/Sekolah</title>
-    <!-- PWA metadata -->
-    <meta name="theme-color" content="#0d9488">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./pwa-icon.svg" type="image/svg+xml">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        },
-                        cream: {
-                            50: '#FFFDF7',
-                            100: '#FFFDF5',
-                            200: '#FBF7E8',
-                            300: '#F4ECD4',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'Georgia', 'Cambria', 'serif'],
-                    }
-                }
-            }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Informasi publik Bank Soal Madrasah, aplikasi untuk membantu guru menyusun bank soal dan naskah ujian.">
+    <meta name="theme-color" content="#0f766e">
+    <title>Bank Soal Madrasah | Informasi Aplikasi</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            color: #1e293b;
+            background: #f8fafc;
         }
-    </script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
-
-    <!-- Libraries: React, ReactDOM, Babel, Mammoth (docx), html2pdf -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <link rel="stylesheet" href="./styles.css">
+        * { box-sizing: border-box; }
+        body { margin: 0; line-height: 1.65; }
+        header { background: #0f766e; color: white; }
+        .wrap { width: min(100% - 2rem, 960px); margin: 0 auto; }
+        .topbar { padding: 1rem 0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        .brand { font-weight: 700; letter-spacing: .02em; }
+        nav { display: flex; flex-wrap: wrap; gap: 1rem; }
+        nav a { color: white; }
+        a { color: #0f766e; }
+        header a { color: white; }
+        main { padding: 3.5rem 0; }
+        .hero { padding: 2rem 0 3rem; }
+        h1 { max-width: 720px; margin: 0 0 1rem; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.1; }
+        h2 { margin-top: 2.25rem; font-size: 1.4rem; }
+        .lead { max-width: 700px; color: #d1fae5; font-size: 1.15rem; }
+        .button { display: inline-block; margin-top: 1rem; padding: .8rem 1.2rem; border-radius: .65rem; background: white; color: #115e59; font-weight: 700; text-decoration: none; }
+        .card { margin: 1rem 0; padding: 1.25rem 1.5rem; border: 1px solid #e2e8f0; border-radius: .8rem; background: white; }
+        .card h2 { margin: 0 0 .5rem; }
+        footer { padding: 1.5rem 0; border-top: 1px solid #e2e8f0; color: #475569; }
+        @media (max-width: 560px) {
+            .topbar { align-items: flex-start; flex-direction: column; }
+            main { padding-top: 2rem; }
+        }
+    </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased font-sans min-h-screen">
-
-    <div id="root"></div>
-
-    <script src="./google-config.js"></script>
-    <script src="./auth-service.js"></script>
-    <script src="./google-sync.js"></script>
-    <script src="./exam-document.js"></script>
-    <script src="./pdf-export.js"></script>
-    <script src="./word-export.js"></script>
-    <script type="text/babel" src="./app.js"></script>
+<body>
+    <header>
+        <div class="wrap topbar">
+            <div class="brand"><img src="./logo-bank-soal.png" alt="" width="32" height="32" style="vertical-align:middle;border-radius:8px;margin-right:.5rem">Bank Soal Madrasah</div>
+            <nav aria-label="Navigasi utama">
+                <a href="#tentang">Tentang</a>
+                <a href="./privacy-policy.html">Kebijakan Privasi</a>
+            </nav>
+        </div>
+        <section class="wrap hero" aria-labelledby="judul">
+            <h1 id="judul">Bank soal dan penyusun naskah ujian untuk guru</h1>
+            <p class="lead">Aplikasi ini membantu guru mengelola soal, menyusun ujian, dan mengekspor naskah. Informasi aplikasi dan kebijakan privasi dapat dibaca tanpa membuat akun atau masuk.</p>
+            <a class="button" href="./app.html">Buka aplikasi</a>
+        </section>
+    </header>
+    <main class="wrap" id="tentang">
+        <section class="card">
+            <h2>Tentang aplikasi</h2>
+            <p>Bank Soal Madrasah adalah aplikasi web untuk membantu guru membuat dan mengelola bank soal serta menyusun naskah ujian. Fitur utamanya mencakup pengelolaan profil guru, input dan impor soal, pemilihan soal untuk ujian, serta ekspor dokumen.</p>
+        </section>
+        <section class="card">
+            <h2>Penggunaan akun dan Google</h2>
+            <p>Login akun aplikasi diperlukan untuk menggunakan fitur pengelolaan. Pengguna dapat memilih untuk menghubungkan akun Google secara terpisah agar dapat menyimpan data pada Google Sheets dan menggunakan Google Drive untuk berkas aplikasi. Koneksi Google bersifat opsional.</p>
+        </section>
+        <section class="card">
+            <h2>Privasi dan pengelola</h2>
+            <p>Kebijakan privasi menjelaskan data yang diproses, tujuan penggunaannya, penyimpanan, serta layanan pihak ketiga yang terlibat. Pengelola proyek: <a href="https://github.com/tamsilmansabolmong">tamsilmansabolmong</a>.</p>
+            <p><a href="./privacy-policy.html">Baca Kebijakan Privasi</a></p>
+        </section>
+    </main>
+    <footer>
+        <div class="wrap">© 2026 Bank Soal Madrasah · <a href="./privacy-policy.html">Kebijakan Privasi</a></div>
+    </footer>
 </body>
 </html>

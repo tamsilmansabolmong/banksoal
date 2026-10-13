@@ -2,6 +2,15 @@
 
 Pendaftaran/login memakai Google Apps Script. Password tidak dikirim ke Google Sheets sebagai teks biasa: Apps Script menyimpan salt dan hash password. Sheet `AkunGuru` berisi NIK/NIP, nama guru, asal madrasah, username, salt, hash, dan tanggal pendaftaran; Sheet `Sesi` berisi hash token sesi dan masa berlaku. Sesi berlaku 30 hari. Opsi **Tetap masuk di perangkat ini** menyimpan token sesi (bukan password) di perangkat; jangan gunakan pada komputer bersama.
 
+## Homepage publik dan verifikasi Google
+
+Homepage publik berada di `index.html` dan dapat diakses tanpa login; aplikasi berada di `app.html`, sedangkan kebijakan privasi ada di `privacy-policy.html`. Setelah semua perubahan dipublikasikan ke GitHub Pages, gunakan URL berikut pada halaman branding/verifikasi OAuth Google:
+
+- Homepage: `https://tamsilmansabolmong.github.io/banksoal/`
+- Kebijakan privasi: `https://tamsilmansabolmong.github.io/banksoal/privacy-policy.html`
+
+Google juga meminta pemilik aplikasi membuktikan kepemilikan homepage melalui Google Search Console. Tambahkan URL homepage sebagai properti, lalu selesaikan metode verifikasi yang diberikan Google (misalnya tag HTML atau file verifikasi pada situs). Jika GitHub Pages tidak mengizinkan verifikasi kepemilikan untuk alamat tersebut, gunakan domain khusus yang Anda miliki dan verifikasi domain itu melalui DNS. Setelah status kepemilikan terverifikasi, tunggu hingga 24 jam sesuai pesan Google sebelum mengirim ulang verifikasi aplikasi.
+
 ## Koneksi Google
 
 Setelah guru menyambungkan Google sekali pada browser/perangkatnya, aplikasi menyimpan email akun Google yang ditautkan pada penyimpanan lokal browser. Keluar dari aplikasi hanya mengakhiri sesi aplikasi dan tidak mencabut izin Google. Saat guru login lagi, aplikasi meminta akses Google secara senyap menggunakan sesi/izin Google yang masih berlaku. Tombol **Putuskan akun** menghapus tautan lokal dan mencabut izin Google.

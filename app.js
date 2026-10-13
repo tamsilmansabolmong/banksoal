@@ -376,10 +376,8 @@
                 <div class="min-h-screen flex flex-col bg-slate-100 font-sans">
                     <header class="bg-gradient-to-r from-teal-800 via-emerald-800 to-teal-900 text-white shadow-lg sticky top-0 z-40">
                         <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 flex flex-wrap justify-between items-center gap-3">
-                            <div class="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
-                                <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center font-bold text-xl text-emerald-300 shadow-inner">
-                                    📚
-                                </div>
+                        <div class="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
+                            <img src="./logo-bank-soal.png" alt="Logo Bank Soal" class="w-10 h-10 rounded-xl object-cover border border-white/20 shadow-inner" />
                                 <div>
                                     <h1 class="font-bold text-lg leading-tight tracking-wide">SOAL MADRASAH</h1>
                                     <p class="text-xs text-emerald-200 font-light">Bank & Exam Generator PWA</p>
@@ -574,7 +572,7 @@
                 <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-900 via-emerald-800 to-slate-900 p-4">
                     <section class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
                         <div class="text-center mb-6">
-                            <div class="mx-auto w-14 h-14 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center text-2xl">📚</div>
+                            <img src="./logo-bank-soal.png" alt="Logo Bank Soal" class="mx-auto w-14 h-14 rounded-2xl object-cover" />
                             <h1 class="mt-3 text-2xl font-bold text-slate-900">SOAL MADRASAH</h1>
                             <p class="mt-1 text-sm text-slate-500">{registerMode ? 'Buat akun guru baru' : 'Masuk ke Bank Soal Madrasah'}</p>
                         </div>
@@ -621,6 +619,11 @@
                             <button type="button" onClick={() => { setRegisterMode((mode) => !mode); setError(''); }} class="font-bold text-teal-700 hover:underline">
                                 {registerMode ? 'Masuk' : 'Daftar'}
                             </button>
+                        </p>
+                        <p class="mt-4 text-center text-xs text-slate-500">
+                            <a href="./" class="text-teal-700 hover:underline">Homepage</a>
+                            {' · '}
+                            <a href="./privacy-policy.html" class="text-teal-700 hover:underline">Kebijakan Privasi</a>
                         </p>
                     </section>
                 </main>
@@ -709,9 +712,7 @@
                         </div>
 
                         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4 min-w-0">
-                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
-                                📚
-                            </div>
+                            <img src="./logo-bank-soal.png" alt="" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
                             <div class="min-w-0 flex-1">
                                 <div class="text-xs text-slate-400 font-semibold uppercase">Koleksi Soal</div>
                                 <div class="font-bold text-slate-800 text-lg">{bankSoal.length} Soal</div>

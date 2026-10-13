@@ -3,16 +3,16 @@
   "name": "Bank & Generator Soal Madrasah",
   "short_name": "Bank Soal",
   "description": "Bank soal dan generator naskah ujian madrasah/sekolah.",
-  "start_url": "./",
+  "start_url": "./app.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f1f5f9",
   "theme_color": "#0d9488",
   "icons": [
     {
-      "src": "./pwa-icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "./logo-bank-soal.png",
+      "sizes": "627x627",
+      "type": "image/png",
       "purpose": "any"
     }
   ]

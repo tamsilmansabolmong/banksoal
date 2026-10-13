@@ -1,7 +1,8 @@
-const CACHE_NAME = 'bank-soal-v5';
+const CACHE_NAME = 'bank-soal-v7';
 const APP_SHELL = [
-    './',
     './index.html',
+    './app.html',
+    './privacy-policy.html',
     './app.js',
     './styles.css',
     './google-config.js',
@@ -12,6 +13,7 @@ const APP_SHELL = [
     './word-export.js',
     './manifest.json',
     './pwa-icon.svg',
+    './logo-bank-soal.png',
     './logo-kemenag.png'
 ];
 const CDN_HOSTS = new Set([
