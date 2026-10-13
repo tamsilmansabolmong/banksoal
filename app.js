@@ -1,15 +1,15 @@
         // Default initial profile data
         const initialProfile = {
             nikNip: "198507122010011005",
-            namaGuru: "Ustadz H. Ahmad Dahlan, M.Pd.",
-            username: "ahmaddahlan",
+            namaGuru: "Tamsil A.P. Moha.",
+            username: "tamsilmoha",
             password: "password123",
-            namaKepsek: "Drs. H. M. Zainuddin, M.Ag.",
+            namaKepsek: "Tamsil A.P. Moha.",
             nipKepsek: "197203151998031002",
-            namaSekolah: "MAN 1 KOTA ADALAH",
-            alamatSekolah: "Jl. Pendidikan No. 45, Kecamatan Sukamaju, Kota Kencana",
+            namaSekolah: "MAN 1 Bolaang Mongondow Plus Keterampilan",
+            alamatSekolah: "Jl. Cendrawasih No.3 Desa Mopuya selatan, Kec. Dumoga Utara, Kab. Bolaang Mongondow, Sulawesi Utara",
             instansi: "KEMENTERIAN AGAMA REPUBLIK INDONESIA",
-            logoUrl: "https://via.placeholder.com/100x100/059669/ffffff?text=MAN+1",
+            logoUrl: "logo-kemenag.png",
             mapelList: ["Fiqih", "Akidah Akhlak", "Bahasa Indonesia", "Matematika", "IPA Terpadu"],
             kelasList: ["X-1", "X-2", "XI-IPA", "XI-IPS", "XII-MIPA"]
         };
@@ -89,6 +89,10 @@
             const [googleConfig, setGoogleConfig] = React.useState(() => GoogleSync.getConfig());
             const [googleIdentity, setGoogleIdentity] = React.useState(() => GoogleSync.getIdentity());
             const [syncing, setSyncing] = React.useState(false);
+            const [installPrompt, setInstallPrompt] = React.useState(null);
+            const [appInstalled, setAppInstalled] = React.useState(() => (
+                window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true
+            ));
             const accountKey = googleIdentity?.email || 'offline';
 
             // Application Data States
@@ -215,6 +219,49 @@
                 showToast("Akun Google diputus dari sesi ini.", "info");
             };
 
+            const installApp = async () => {
+                if (!/^https?:$/.test(window.location.protocol)) {
+                    showToast('Aplikasi harus dibuka melalui HTTPS atau localhost agar dapat dipasang.', 'warning');
+                    return;
+                }
+                if (!installPrompt) {
+                    showToast('Gunakan menu browser “Instal aplikasi” atau “Tambahkan ke layar utama”.', 'info');
+                    return;
+                }
+
+                try {
+                    await installPrompt.prompt();
+                    const choice = await installPrompt.userChoice;
+                    setInstallPrompt(null);
+                    if (choice.outcome === 'accepted') setAppInstalled(true);
+                } catch (error) {
+                    console.error('Instalasi aplikasi gagal:', error);
+                    showToast(`Gagal memulai instalasi aplikasi: ${error.message}`, 'error');
+                }
+            };
+
+            React.useEffect(() => {
+                const handleInstallPrompt = (event) => {
+                    event.preventDefault();
+                    setInstallPrompt(event);
+                };
+                const handleAppInstalled = () => {
+                    setAppInstalled(true);
+                    setInstallPrompt(null);
+                };
+                const standaloneMode = window.matchMedia('(display-mode: standalone)');
+                const handleDisplayModeChange = (event) => setAppInstalled(event.matches);
+
+                window.addEventListener('beforeinstallprompt', handleInstallPrompt);
+                window.addEventListener('appinstalled', handleAppInstalled);
+                standaloneMode.addEventListener?.('change', handleDisplayModeChange);
+                return () => {
+                    window.removeEventListener('beforeinstallprompt', handleInstallPrompt);
+                    window.removeEventListener('appinstalled', handleAppInstalled);
+                    standaloneMode.removeEventListener?.('change', handleDisplayModeChange);
+                };
+            }, []);
+
             React.useEffect(() => {
                 if ('serviceWorker' in navigator && /^https?:$/.test(window.location.protocol)) {
                     navigator.serviceWorker.register('./service-worker.js').catch((error) => {
@@ -237,12 +284,23 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center space-x-2 bg-black/20 backdrop-blur px-3 py-1.5 rounded-full text-xs border border-white/10">
-                                <span class={`w-2.5 h-2.5 rounded-full ${googleIdentity ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
-                                <span class="hidden sm:inline text-slate-200">
-                                    {googleIdentity ? googleIdentity.email || 'Google terhubung' : 'Lokal / Offline'}
-                                </span>
-                                {googleIdentity && (
+                            {!appInstalled && (
+                                <button
+                                    type="button"
+                                    onClick={installApp}
+                                    class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2"
+                                >
+                                    <span aria-hidden="true">⬇️</span>
+                                    <span>Instal Aplikasi</span>
+                                </button>
+                            )}
+
+                            {googleIdentity && (
+                                <div class="flex items-center space-x-2 bg-black/20 backdrop-blur px-3 py-1.5 rounded-full text-xs border border-white/10">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span class="hidden sm:inline text-slate-200">
+                                        {googleIdentity.email || 'Google terhubung'}
+                                    </span>
                                     <button 
                                         onClick={() => fetchFromGoogleSheet().catch(() => {})}
                                         disabled={syncing}
@@ -251,8 +309,8 @@
                                     >
                                         {syncing ? 'Syncing...' : 'Sync Now'}
                                     </button>
-                                )}
-                            </div>
+                                </div>
+                            )}
 
                             <nav class="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm font-medium overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
                                 <button 
@@ -435,48 +493,48 @@
 
             return (
                 <div class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 👨‍🏫
                             </div>
-                            <div>
+                            <div class="min-w-0 flex-1">
                                 <div class="text-xs text-slate-400 font-semibold uppercase">Guru Pengampu</div>
-                                <div class="font-bold text-slate-800 text-sm truncate">{profile.namaGuru}</div>
-                                <div class="text-xs text-slate-500">NIP: {profile.nikNip}</div>
+                                <div class="font-bold text-slate-800 text-sm leading-snug break-words">{profile.namaGuru}</div>
+                                <div class="text-xs text-slate-500 break-words">NIP: {profile.nikNip}</div>
                             </div>
                         </div>
 
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xl">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 🏫
                             </div>
-                            <div>
-                                <div class="text-xs text-slate-400 font-semibold uppercase">Satuan Pendidikan</div>
-                                <div class="font-bold text-slate-800 text-sm truncate">{profile.namaSekolah}</div>
-                                <div class="text-xs text-slate-500">{profile.instansi}</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-xs text-slate-400 font-semibold uppercase tracking-wide">Satuan Pendidikan</div>
+                                <div class="font-bold text-slate-800 text-sm leading-snug break-words">{profile.namaSekolah}</div>
+                                <div class="text-xs text-slate-500 leading-relaxed break-words mt-1">{profile.instansi}</div>
                             </div>
                         </div>
 
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 📚
                             </div>
-                            <div>
+                            <div class="min-w-0 flex-1">
                                 <div class="text-xs text-slate-400 font-semibold uppercase">Koleksi Soal</div>
                                 <div class="font-bold text-slate-800 text-lg">{bankSoal.length} Soal</div>
-                                <div class="text-xs text-slate-500">{profile.mapelList.length} Mata Pelajaran</div>
+                                <div class="text-xs text-slate-500 leading-relaxed">{profile.mapelList.length} Mata Pelajaran</div>
                             </div>
                         </div>
 
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xl">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xl flex-shrink-0">
                                 🎓
                             </div>
-                            <div>
+                            <div class="min-w-0 flex-1">
                                 <div class="text-xs text-slate-400 font-semibold uppercase">Kelas Diampu</div>
                                 <div class="font-bold text-slate-800 text-lg">{profile.kelasList.length} Kelas</div>
-                                <div class="text-xs text-slate-500">{profile.kelasList.join(', ')}</div>
+                                <div class="text-xs text-slate-500 leading-relaxed break-words">{profile.kelasList.join(', ')}</div>
                             </div>
                         </div>
                     </div>
@@ -522,7 +580,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Madrasah (Garis 2 Kop Surat)</label>
-                                    <input type="text" name="namaSekolah" value={formData.namaSekolah} onChange={handleChange} placeholder="contoh: MAN 1 KOTA JAKARTA" required class="w-full px-3 py-2 border rounded-xl text-sm font-bold focus:ring-2 focus:ring-emerald-500 outline-none" />
+                                    <input type="text" name="namaSekolah" value={formData.namaSekolah} onChange={handleChange} placeholder="contoh: MAN 1 BOLMONG" required class="w-full px-3 py-2 border rounded-xl text-sm font-bold focus:ring-2 focus:ring-emerald-500 outline-none" />
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Alamat Lengkap & Kontak (Garis 3 Kop Surat)</label>
@@ -1460,7 +1518,9 @@
                 let downloaded = false;
                 try {
                     const data = { profile, examConfig, questions: selectedQuestions, options: { ...pdfOptions } };
-                    const blob = selectedFormat === 'pdf' ? await PdfExporter.createPdf(data) : WordExporter.createWord(data);
+                    const blob = selectedFormat === 'pdf'
+                        ? await PdfExporter.createPdf(data)
+                        : await WordExporter.createWord(data);
                     const downloadUrl = URL.createObjectURL(blob);
                     const anchor = document.createElement('a');
                     anchor.href = downloadUrl;

@@ -1,7 +1,7 @@
-const CACHE_NAME = 'bank-soal-v2';
+const CACHE_NAME = 'bank-soal-v3';
 const APP_SHELL = [
     './',
-    './bank_generator_soal_madrasah_sekolah.html',
+    './index.html',
     './app.js',
     './styles.css',
     './google-config.js',
@@ -10,7 +10,8 @@ const APP_SHELL = [
     './pdf-export.js',
     './word-export.js',
     './manifest.json',
-    './pwa-icon.svg'
+    './pwa-icon.svg',
+    './logo-kemenag.png'
 ];
 const CDN_HOSTS = new Set([
     'cdn.tailwindcss.com',
@@ -41,7 +42,9 @@ self.addEventListener('fetch', (event) => {
             caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
                 if (response.ok) caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
                 return response;
-            }).catch(() => caches.match('./bank_generator_soal_madrasah_sekolah.html')))
+            }).catch(() => event.request.mode === 'navigate'
+                ? caches.match('./index.html')
+                : Promise.reject(new Error(`Aset offline tidak tersedia: ${event.request.url}`))))
         );
         return;
     }
